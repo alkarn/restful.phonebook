@@ -1,22 +1,29 @@
 package travelling.with.code.restful.phonebook.resources;
 
 /**
- * A class representing a contact in the phone book.
+ * A class containing all the useful information of a contact in the phone book.
+ * <p/>
+ * When a phone book user wants to insert a new contact in the book, he will only be
+ * concerned about the information included in this class.
  *
  * @author <a href="mailto:travelling.with.code@gmail.com">Alex</a>
  */
 public class Contact {
 
-    private Long id;
     private String name;
     private String surname;
     private String phone;
 
-    public Contact(long id, String name, String surname, String phone) {
-        this.id = id;
+    public Contact(String name, String surname, String phone) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
+    }
+
+    public Contact(Contact contact) {
+        this.name = contact.getName();
+        this.surname = contact.getSurname();
+        this.phone = contact.getPhone();
     }
 
     public Contact() {
@@ -45,14 +52,6 @@ public class Contact {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
 }

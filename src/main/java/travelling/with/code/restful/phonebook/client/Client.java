@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import travelling.with.code.restful.phonebook.resources.Contact;
+import travelling.with.code.restful.phonebook.resources.IndexedContact;
 
 public class Client {
 
@@ -21,11 +21,11 @@ public class Client {
         restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
     }
 
-    public Contact getContact(long id) {
-        return restTemplate.getForObject(targetUrl + "/" + id, Contact.class);
+    public IndexedContact getContact(long id) {
+        return restTemplate.getForObject(targetUrl + "/" + id, IndexedContact.class);
     }
 
-    public Collection<Contact> getContacts(Optional<String> name, Optional<String> surname, Optional<String> phone) {
+    public Collection<IndexedContact> getContacts(Optional<String> name, Optional<String> surname, Optional<String> phone) {
         Map<String, String> requestParameters = new HashMap<>();
         if (name.isPresent()) {
             requestParameters.put("name", name.get());
@@ -36,7 +36,7 @@ public class Client {
         if (phone.isPresent()) {
             requestParameters.put("phone", phone.get());
         }
-        Contact[] contactsArray = restTemplate.getForObject(targetUrl, Contact[].class, requestParameters);
+        IndexedContact[] contactsArray = restTemplate.getForObject(targetUrl, IndexedContact[].class, requestParameters);
         return Arrays.asList(contactsArray);
     }
 

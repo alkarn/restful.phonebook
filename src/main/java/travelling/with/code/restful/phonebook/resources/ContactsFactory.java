@@ -1,6 +1,7 @@
 package travelling.with.code.restful.phonebook.resources;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Should be implemented to create a collection of contacts. Should be used by classes,
@@ -11,6 +12,10 @@ import java.util.Collection;
  */
 public interface ContactsFactory {
 
-    public Collection<Contact> createContacts();
+    public Collection<IndexedContact> createContactsCollection();
+
+    public Map<Long, IndexedContact> createContactsMap();
+
+    public IndexedContact createIndexedContact(Contact contact);
 
 }

@@ -29,7 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import net.minidev.json.JSONObject;
 import travelling.with.code.restful.phonebook.Application;
-import travelling.with.code.restful.phonebook.resources.Contact;
+import travelling.with.code.restful.phonebook.resources.IndexedContact;
 import travelling.with.code.restful.phonebook.resources.InMemoryPhoneBook;
 import travelling.with.code.restful.phonebook.resources.PhoneBook;
 
@@ -51,7 +51,7 @@ public class ServerSideTests {
     /**
      * The contacts that will be used to fill the phonebook and run the tests.
      */
-    private ArrayList<Contact> contacts;
+    private ArrayList<IndexedContact> contacts;
 
     /**
      * The same contacts as {@link ServerSideTests#contacts}, but in {@link JSONObject} form.
@@ -80,12 +80,12 @@ public class ServerSideTests {
             ResourcesContactsFactory contactsFactory = new ResourcesContactsFactory();
             ((InMemoryPhoneBook) phoneBook).setContactsFactory(contactsFactory);
             ((InMemoryPhoneBook) phoneBook).init();	// FIXME
-            contacts = new ArrayList<>(contactsFactory.createContacts());
+            contacts = new ArrayList<>(contactsFactory.createContactsCollection());
             jsonContacts = new ArrayList<>(contacts.stream().map(this::createJsonObject).collect(Collectors.toList()));
         }
     }
 
-    private JSONObject createJsonObject(Contact contact) {
+    private JSONObject createJsonObject(IndexedContact contact) {
         return createJsonObject(contact.getId(), contact.getName(), contact.getSurname(), contact.getPhone());
     }
 
@@ -110,7 +110,7 @@ public class ServerSideTests {
 
     @Test
     public void findContactById() throws Exception {
-        Contact randomContact = getRandomContact();
+        IndexedContact randomContact = getRandomContact();
         mockMvc.perform(get(phoneBookUrl + "contacts/{id}", randomContact.getId()).accept(contentType))
                .andExpect(status().isOk())
                .andExpect(content().contentType(contentType))
@@ -130,7 +130,7 @@ public class ServerSideTests {
 
     @Test
     public void findContactsByName() throws Exception {
-        Contact randomContact = getRandomContact();
+        IndexedContact randomContact = getRandomContact();
         mockMvc.perform(get(phoneBookUrl + "/contacts?name={name}", randomContact.getName()).accept(contentType))
                .andExpect(status().isOk())
                .andExpect(content().contentType(contentType))
@@ -150,7 +150,7 @@ public class ServerSideTests {
 
     @Test
     public void findContactsBySurname() throws Exception {
-        Contact randomContact = getRandomContact();
+        IndexedContact randomContact = getRandomContact();
         mockMvc.perform(get(phoneBookUrl + "/contacts?surname={surname}", randomContact.getSurname()).accept(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -160,7 +160,7 @@ public class ServerSideTests {
 
     @Test
     public void findContactsByNameAndSurname() throws Exception {
-        Contact randomContact = getRandomContact();
+        IndexedContact randomContact = getRandomContact();
         mockMvc.perform(get(phoneBookUrl + "/contacts?name={name}&surname={surname}", randomContact.getName(), randomContact.getSurname()).accept(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -171,7 +171,7 @@ public class ServerSideTests {
 
     @Test
     public void findContactsByPhone() throws Exception {
-        Contact randomContact = getRandomContact();
+        IndexedContact randomContact = getRandomContact();
         mockMvc.perform(get(phoneBookUrl + "/contacts?phone={phone}", randomContact.getPhone()).accept(contentType))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
@@ -179,7 +179,7 @@ public class ServerSideTests {
                 .andExpect(jsonPath("$.[*].phone", everyItem(is(randomContact.getPhone()))));
     }
 
-    private Contact getRandomContact() {
+    private IndexedContact getRandomContact() {
         Random randomIndexGenerator = new Random();
         int randomContactIndex = randomIndexGenerator.nextInt(contacts.size());
         return contacts.get(randomContactIndex);

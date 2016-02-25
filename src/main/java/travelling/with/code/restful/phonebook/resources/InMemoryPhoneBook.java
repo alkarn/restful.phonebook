@@ -1,16 +1,20 @@
 package travelling.with.code.restful.phonebook.resources;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
 
 /**
- * An implementation of {@link PhoneBook}, that creates a {@link Collection} of contacts, using a {@link ContactsFactory},
+ * An implementation of {@link PhoneBook}, that creates a {@link HashMap} of contacts, using a {@link ContactsFactory},
  * and maintains it in memory as long as the server runs.
  * <p/>
  * By default, the {@link ContactsFactory} that is used is {@link SimpsonsContactsFactory}, an implementation that
@@ -26,7 +30,7 @@ public class InMemoryPhoneBook implements PhoneBook {
     /**
      * Holds the contacts that will be available in this phone book.
      */
-    private Collection<Contact> contacts;
+    private Map<Long, IndexedContact> indexedContacts;
 
     /**
      * Is used to create contacts for this phone book.
@@ -39,20 +43,44 @@ public class InMemoryPhoneBook implements PhoneBook {
 
     @PostConstruct
     public void init() {
-        contacts = contactsFactory.createContacts();
+        indexedContacts = contactsFactory.createContactsMap();
     }
 
     @Override
-    public Optional<Contact> findContact(Long id) {
-        return contacts.stream().filter(contact -> id == contact.getId()).findAny();
+    public Optional<IndexedContact> findContact(Long id) {
+        return Optional.ofNullable(indexedContacts.get(id));
     }
 
     @Override
-    public Collection<Contact> findContacts(Optional<String> name, Optional<String> surname, Optional<String> phone) {
+    public Collection<IndexedContact> findContacts(Optional<String> name, Optional<String> surname, Optional<String> phone) {
+        Stream<IndexedContact> contactStream = indexedContacts.entrySet().stream().map(Entry::getValue);
         if (!name.isPresent() && !surname.isPresent() && !phone.isPresent()) {
-            return contacts;
+            return contactStream.collect(Collectors.toList());
         }
-        return contacts.stream().filter(contact -> (filterByAttribute(contact::getName, name) && filterByAttribute(contact::getSurname, surname) && filterByAttribute(contact::getPhone, phone))).collect(Collectors.toList());
+        return contactStream.filter(contact -> (filterByAttribute(contact::getName, name) && filterByAttribute(contact::getSurname, surname) && filterByAttribute(contact::getPhone, phone))).collect(Collectors.toList());
+    }
+
+    @Override
+    public IndexedContact addContact(Contact contact) {
+        IndexedContact indexedContact = contactsFactory.createIndexedContact(contact);
+        indexedContacts.put(indexedContact.getId(), indexedContact);
+        return indexedContact;
+    }
+
+    @Override
+    public IndexedContact addContact(IndexedContact contact) {
+        indexedContacts.put(contact.getId(), contact);
+        return contact;
+    }
+
+    @Override
+    public void deleteContact(IndexedContact contact) {
+        indexedContacts.remove(contact.getId());
+    }
+
+    @Override
+    public void deleteContact(Long id) {
+        indexedContacts.remove(id);
     }
 
     /**
