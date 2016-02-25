@@ -84,7 +84,6 @@ public class PhoneBookController {
         return phoneBook.addContact(contact);
     }
 
-
     /**
      * Adds the {@link IndexedContact} in the request body to the phone book. If there already exists a contact
      * under the specific URI it will update the contact. For this reason the URI's id and the {@link IndexedContact}'s id

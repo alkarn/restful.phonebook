@@ -43,7 +43,7 @@ public class InMemoryPhoneBook implements PhoneBook {
 
     @PostConstruct
     public void init() {
-        indexedContacts = contactsFactory.createContactsMap();
+        indexedContacts = contactsFactory.createInitContactsMap();
     }
 
     @Override

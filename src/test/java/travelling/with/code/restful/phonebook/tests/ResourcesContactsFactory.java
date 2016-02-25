@@ -39,8 +39,14 @@ public class ResourcesContactsFactory implements ContactsFactory {
      */
     private static final Pattern contactPattern = Pattern.compile("(?m)^name=(.*?),surname=(.*?),phone=(.*)$");
 
+    /**
+     * Will be used to uniquely identify new contacts. Contacts in the properties file should have ids less than this field's value
+     * so that no inconsistencies appear in the phone book.
+     */
+    private int identifier = 200;
+
     @Override
-    public Collection<IndexedContact> createContactsCollection() {
+    public Collection<IndexedContact> createInitContactsCollection() {
         Collection<IndexedContact> contacts = new ArrayList<IndexedContact>();
         for (String id : resourceContacts.keySet()) {
             String contact = resourceContacts.getString(id);
@@ -57,13 +63,12 @@ public class ResourcesContactsFactory implements ContactsFactory {
 
     @Override
     public IndexedContact createIndexedContact(Contact contact) {
-        // TODO Auto-generated method stub
-        return null;
+        return  new IndexedContact(identifier++, contact);
     }
 
     @Override
-    public Map<Long, IndexedContact> createContactsMap() {
-        return createContactsCollection().stream().collect(Collectors.toMap(IndexedContact::getId, contact -> contact));
+    public Map<Long, IndexedContact> createInitContactsMap() {
+        return createInitContactsCollection().stream().collect(Collectors.toMap(IndexedContact::getId, contact -> contact));
     }
 
 }

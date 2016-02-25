@@ -15,7 +15,7 @@ public class SimpsonsContactsFactory implements ContactsFactory {
     private long identifier = 0;
 
     @Override
-    public Collection<IndexedContact> createContactsCollection() {
+    public Collection<IndexedContact> createInitContactsCollection() {
         Collection<IndexedContact> simpsons = new ArrayList<IndexedContact>();
         simpsons.add(new IndexedContact(newUniqueIdentifier(), "Hommer", "Simpson", "+1-877-555-2501"));
         simpsons.add(new IndexedContact(newUniqueIdentifier(), "Marge", "Simpson", "+1-877-555-2502"));
@@ -25,7 +25,7 @@ public class SimpsonsContactsFactory implements ContactsFactory {
     }
 
     @Override
-    public HashMap<Long, IndexedContact> createContactsMap() {
+    public HashMap<Long, IndexedContact> createInitContactsMap() {
         HashMap<Long, IndexedContact> simpsons = new HashMap<>();
 
         Long currentId = newUniqueIdentifier();
