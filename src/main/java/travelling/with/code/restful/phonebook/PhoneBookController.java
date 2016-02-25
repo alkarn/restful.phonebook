@@ -1,5 +1,7 @@
 package travelling.with.code.restful.phonebook;
 
+import io.swagger.annotations.ApiOperation;
+
 import java.util.Collection;
 import java.util.Optional;
 
@@ -51,6 +53,7 @@ public class PhoneBookController {
      * @param phone - the phone to be looked up in phonebook contacts.
      * @return a collection of contacts that match with the name, surname and/or phone provided by the request. If no parameters are provided returns all the contacts in the phonebook.
      */
+	@ApiOperation("Search inside the phone book contacts by name, surname or phone. If you provide no search criteria all the contacts will be returned.")
     @RequestMapping(method=RequestMethod.GET)
     public Collection<IndexedContact> getContacts(@RequestParam(value="name", required=false) String name, @RequestParam(value="surname", required=false) String surname,
             @RequestParam(value="phone", required=false) String phone) {
@@ -64,6 +67,7 @@ public class PhoneBookController {
      * @return the contact that matches request's id, if such contact exists.
      * @throws ContactNotFoundException if no contact is found with this id.
      */
+	@ApiOperation("Get a single contact using its id.")
     @RequestMapping(value="{id}", method=RequestMethod.GET)
     public IndexedContact getContact(@PathVariable Long id) throws ContactNotFoundException {
         return phoneBook.findContact(id).orElseThrow(() -> new ContactNotFoundException(String.valueOf(id)));
@@ -78,6 +82,7 @@ public class PhoneBookController {
      * @param contact - the contact to be added in the phone book.
      * @return an {@link IndexedContact}, which has the same details with the contact provided, but also the unique id that identifies it in the phone book.
      */
+	@ApiOperation("Add an un-indexed contact to the phone book. Provide just name, surname and phone the the phone book will handle its indexing.")
     @RequestMapping(method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public IndexedContact addContact(@RequestBody Contact contact) {
@@ -95,6 +100,7 @@ public class PhoneBookController {
      * @return the contact added to the phone book.
      * @throws IllegalContactException if the URI's id and the {@link IndexedContact}'s id are not the same.
      */
+	@ApiOperation("Add an indexed contact to the phone book. If the id belongs to an older contact it will be replaced.")
     @RequestMapping(value="{id}", method=RequestMethod.PUT)
     public IndexedContact addContact(@PathVariable Long id, @RequestBody IndexedContact indexedContact) throws IllegalContactException {
         if (indexedContact.getId() == null || !id.equals(indexedContact.getId())) {
@@ -108,6 +114,7 @@ public class PhoneBookController {
      *
      * @param id - the id of the contact to be deleted.
      */
+	@ApiOperation("Delete a contact from the phone book using its id.")
     @RequestMapping(value="{id}", method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContact(@PathVariable Long id) {
