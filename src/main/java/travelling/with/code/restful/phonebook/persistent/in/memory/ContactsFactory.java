@@ -1,7 +1,11 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.persistent.in.memory;
 
 import java.util.Collection;
 import java.util.Map;
+
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
+import travelling.with.code.restful.phonebook.dao.PhoneBook;
 
 /**
  * Should be implemented to create a collection of initial contacts that will be used by classes,

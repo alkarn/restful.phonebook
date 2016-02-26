@@ -1,8 +1,11 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.persistent.in.memory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
 
 /**
  * An implementation of the {@link ContactsFactory} interface, that creates a collection

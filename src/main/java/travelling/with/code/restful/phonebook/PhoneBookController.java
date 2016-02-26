@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.mvc.Controller;
 
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
+import travelling.with.code.restful.phonebook.dao.PhoneBook;
 import travelling.with.code.restful.phonebook.exceptions.ContactNotFoundException;
 import travelling.with.code.restful.phonebook.exceptions.IllegalContactException;
-import travelling.with.code.restful.phonebook.resources.Contact;
-import travelling.with.code.restful.phonebook.resources.IndexedContact;
-import travelling.with.code.restful.phonebook.resources.PhoneBook;
 
 /**
  * A controller that will handle HTTP requests to the server, following Spring’s approach to building RESTful web services.

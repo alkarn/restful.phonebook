@@ -35,10 +35,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.context.WebApplicationContext;
 
 import travelling.with.code.restful.phonebook.Application;
-import travelling.with.code.restful.phonebook.resources.Contact;
-import travelling.with.code.restful.phonebook.resources.InMemoryPhoneBook;
-import travelling.with.code.restful.phonebook.resources.IndexedContact;
-import travelling.with.code.restful.phonebook.resources.PhoneBook;
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
+import travelling.with.code.restful.phonebook.dao.PhoneBook;
+import travelling.with.code.restful.phonebook.persistent.in.memory.InMemoryPhoneBook;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

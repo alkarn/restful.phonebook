@@ -1,4 +1,4 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.dao;
 
 import java.util.Collection;
 import java.util.Optional;

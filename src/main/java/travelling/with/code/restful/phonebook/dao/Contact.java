@@ -1,4 +1,4 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.dao;
 
 /**
  * A class containing all the useful information of a contact in the phone book.

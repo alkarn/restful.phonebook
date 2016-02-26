@@ -1,4 +1,4 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.dao;
 
 /**
  * A class that extends {@link Contact}, in order to provide the {@link IndexedContact#id} field.

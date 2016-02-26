@@ -1,4 +1,4 @@
-package travelling.with.code.restful.phonebook.resources;
+package travelling.with.code.restful.phonebook.persistent.in.memory;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +12,10 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Repository;
+
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
+import travelling.with.code.restful.phonebook.dao.PhoneBook;
 
 /**
  * An implementation of {@link PhoneBook}, that creates a {@link HashMap} of contacts, using a {@link ContactsFactory},

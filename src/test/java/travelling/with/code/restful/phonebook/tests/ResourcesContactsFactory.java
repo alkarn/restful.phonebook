@@ -8,9 +8,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import travelling.with.code.restful.phonebook.resources.Contact;
-import travelling.with.code.restful.phonebook.resources.ContactsFactory;
-import travelling.with.code.restful.phonebook.resources.IndexedContact;
+import travelling.with.code.restful.phonebook.dao.Contact;
+import travelling.with.code.restful.phonebook.dao.IndexedContact;
+import travelling.with.code.restful.phonebook.persistent.in.memory.ContactsFactory;
 
 /**
  * Creates a collection of contacts using the src/test/resources/contacts.properties file.
